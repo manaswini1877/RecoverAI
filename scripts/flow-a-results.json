@@ -1,0 +1,16 @@
+{
+  "allPassed": true,
+  "checks": {
+    "originalAmount": true,
+    "recoveredRevenue": true,
+    "outcomeRecovered": true,
+    "paymentStatus": true,
+    "recoveryAction": true,
+    "duplicateRisk": true,
+    "retriesAvoided": true,
+    "customerMessages": true
+  },
+  "overviewUpdated": true,
+  "caseRecovered": true,
+  "timelineHasPayment": true
+}

@@ -1,0 +1,198 @@
+{
+  "routes": [
+    {
+      "route": "/",
+      "name": "Marketing Landing Page",
+      "loaded": true,
+      "reloadWorking": true,
+      "status": "PASS"
+    },
+    {
+      "route": "/demo",
+      "name": "Guided Hackathon Demo",
+      "loaded": true,
+      "reloadWorking": true,
+      "status": "PASS"
+    },
+    {
+      "route": "/login",
+      "name": "Merchant Sign-In",
+      "loaded": true,
+      "reloadWorking": true,
+      "status": "PASS"
+    },
+    {
+      "route": "/app/overview",
+      "name": "Recovery Command Center",
+      "loaded": true,
+      "reloadWorking": true,
+      "status": "PASS"
+    },
+    {
+      "route": "/app/agent-checkout",
+      "name": "Agentic Checkout Monitor",
+      "loaded": true,
+      "reloadWorking": true,
+      "status": "PASS"
+    },
+    {
+      "route": "/app/agents",
+      "name": "AI Agent Registry",
+      "loaded": true,
+      "reloadWorking": true,
+      "status": "PASS"
+    },
+    {
+      "route": "/app/cases",
+      "name": "Failed-Payment Case Queue",
+      "loaded": true,
+      "reloadWorking": true,
+      "status": "PASS"
+    },
+    {
+      "route": "/app/cases/REC-10482",
+      "name": "Explainable Case Detail",
+      "loaded": true,
+      "reloadWorking": true,
+      "status": "PASS"
+    },
+    {
+      "route": "/app/live-agent",
+      "name": "Live Agent Activity Stream",
+      "loaded": true,
+      "reloadWorking": true,
+      "status": "PASS"
+    },
+    {
+      "route": "/app/analytics",
+      "name": "Revenue & Agentic Analytics",
+      "loaded": true,
+      "reloadWorking": true,
+      "status": "PASS"
+    },
+    {
+      "route": "/app/policies",
+      "name": "Recovery Constitution",
+      "loaded": true,
+      "reloadWorking": true,
+      "status": "PASS"
+    },
+    {
+      "route": "/app/customers",
+      "name": "Customer Recovery History",
+      "loaded": true,
+      "reloadWorking": true,
+      "status": "PASS"
+    },
+    {
+      "route": "/app/integrations",
+      "name": "Mock Webhooks & Rails",
+      "loaded": true,
+      "reloadWorking": true,
+      "status": "PASS"
+    },
+    {
+      "route": "/app/settings",
+      "name": "Workspace Settings",
+      "loaded": true,
+      "reloadWorking": true,
+      "status": "PASS"
+    }
+  ],
+  "mainDemo": {
+    "step1": true,
+    "step2": true,
+    "step3": true,
+    "step4": true,
+    "step5": true,
+    "step7": true,
+    "overall": "PASS"
+  },
+  "failureScenarios": [
+    {
+      "scenario": "Temporary UPI Timeout",
+      "passed": true,
+      "status": "PASS"
+    },
+    {
+      "scenario": "Agent Intent Drift Overrun",
+      "passed": true,
+      "status": "PASS"
+    },
+    {
+      "scenario": "Duplicate Debit Signal",
+      "passed": true,
+      "status": "PASS"
+    },
+    {
+      "scenario": "Card Expired Decline",
+      "passed": true,
+      "status": "PASS"
+    },
+    {
+      "scenario": "Bank CBS Outage",
+      "passed": true,
+      "status": "PASS"
+    },
+    {
+      "scenario": "Delayed Acquirer Webhook",
+      "passed": true,
+      "status": "PASS"
+    },
+    {
+      "scenario": "High-Value VIP Order",
+      "passed": true,
+      "status": "PASS"
+    },
+    {
+      "scenario": "Customer Abandoned Checkout",
+      "passed": true,
+      "status": "PASS"
+    },
+    {
+      "scenario": "Customer Paid Recovery",
+      "passed": true,
+      "status": "PASS"
+    }
+  ],
+  "policies": [
+    {
+      "policy": "Autonomy: Observe Only",
+      "expected": "Switches autonomous execution to passive monitoring",
+      "actual": "Decisions labeled as observation recommendations without auto-dispatch",
+      "status": "PASS"
+    }
+  ],
+  "agentControls": [
+    {
+      "action": "Pause Agent",
+      "result": "PASS"
+    },
+    {
+      "action": "Resume Agent",
+      "result": "PASS"
+    }
+  ],
+  "persistence": {
+    "resetWorking": "PASS"
+  },
+  "viewports": [
+    {
+      "viewport": "Desktop (1440x900)",
+      "status": "PASS"
+    },
+    {
+      "viewport": "Tablet (768x1024)",
+      "status": "PASS"
+    },
+    {
+      "viewport": "Mobile (390x844)",
+      "status": "PASS"
+    }
+  ],
+  "accessibility": {
+    "shortcutD": "PASS",
+    "commandPalette": "PASS"
+  },
+  "consoleErrors": []
+}
