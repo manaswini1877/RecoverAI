@@ -1,315 +1,319 @@
-RecoverAI
+
+✦ RecoverAI
 Recover revenue. Protect trust. Enable autonomous checkout.
-A trust-aware agentic checkout and payment-recovery layer for merchants.
+<p align="center">
+  <strong>A trust-aware control layer for AI-agent-initiated payments</strong><br />
+  Verify the agent. Enforce the scope. Recover the safe payment. Block the unsafe one.
+</p>
+<p align="center">
+  <img src="https://img.shields.io/badge/Track%201-AI%20Growth%20%26%20Agentic%20Commerce-8B5CF6?style=for-the-badge" alt="Track 1" />
+  <img src="https://img.shields.io/badge/Status-Hackathon%20Prototype-35D0A0?style=for-the-badge" alt="Hackathon Prototype" />
+  <img src="https://img.shields.io/badge/Data-Synthetic%20Only-F5B84B?style=for-the-badge" alt="Synthetic Data" />
+</p>
+<p align="center">
+  <a href="#-live-demo-story">Live Demo Story</a> ·
+  <a href="#-why-recoverai">Why RecoverAI?</a> ·
+  <a href="#-architecture">Architecture</a> ·
+  <a href="#-quick-start">Quick Start</a>
+</p>
+RecoverAI is an independent prototype for the Razorpay Internship Application. It is not an official Razorpay product and uses synthetic payment, customer, merchant, and agent data.
 
-RecoverAI is an independent hackathon prototype created for the Razorpay Internship Application — Track 1: AI Growth & Agentic Commerce.
-
-It helps merchants safely handle payments initiated by AI agents by verifying simulated agent identity, enforcing authorization limits, detecting intent drift, preventing duplicate charges, and recovering safe payment failures.
-
-Disclaimer: RecoverAI is not an official Razorpay product. It uses synthetic payment, customer, merchant, and agent data for demonstration purposes only.
 
 
+⚡ The Idea in 30 Seconds
+AI agents will soon search, choose, and pay on behalf of people. But when an agent initiates a checkout, merchants need more than a payment button—they need trust, authorization, safety, and explainability.
 
-Why RecoverAI?
-AI agents will increasingly search, choose, and pay on behalf of people. This creates a new trust problem for merchants:
+RecoverAI sits between agent intent and payment execution.
 
-•	Is the agent authorized to make this purchase?
-•	Does the amount match the customer’s original intent?
-•	Is the requested category allowed?
-•	Can the agent retry a failed payment?
-•	Has the customer already been debited?
-•	When should a human operator intervene?
+It answers four questions before allowing an action:
 
-Traditional checkout systems often treat every payment attempt the same and may retry failures blindly. RecoverAI adds an explainable control layer between agent intent and payment execution.
+Who initiated this payment?
+What was the agent authorized to do?
+Is the current request still within the original intent?
+Is it safe to recover, approve, or retry this payment?
 
 RecoverAI helps safe autonomous purchases complete while stopping unsafe autonomous actions.
 
 
 
-Core Capabilities
-Agentic checkout control
-•	Simulated agent identity verification
-•	Agent trust scoring
-•	Authorization-scope validation
-•	Transaction and daily spending limits
-•	Allowed category and payment-method restrictions
-•	Authorization expiry checks
-•	Human approval for high-value or low-confidence actions
-•	Pause and revoke controls for merchant operators
-
-Intent-drift detection
-RecoverAI compares the original authorized intent with a new request. If an agent attempts to increase the amount or change the category beyond its scope, the transaction is blocked or routed for approval.
-
-Trust-aware payment recovery
-Instead of blindly retrying a failed payment, RecoverAI diagnoses the failure and chooses a safer next-best action:
-
-•	Alternate payment link
-•	Delayed retry
-•	Payment-method update
-•	Customer reminder
-•	Reconciliation hold
-•	Human-support escalation
-•	No action
-
-Duplicate-charge protection
-Before recovery, the system checks for:
-
-•	Successful debit signals
-•	Pending bank confirmation
-•	Delayed webhook status
-•	Recent retry activity
-•	Idempotency protection
-•	Refund or reversal flags
-
-Explainable AI decisions
-Each decision includes:
-
-•	Customer intent score
-•	Agent trust score
-•	Recoverability score
-•	Duplicate-charge risk
-•	Authorization compliance
-•	Decision confidence
-•	Plain-English reasoning
-•	Safety checklist
-•	Full audit timeline
-
-Agent Action Receipt
-Every completed, blocked, or escalated case can generate an auditable receipt containing the final state, action taken, safeguards applied, outcome, policy version, and timestamp. Receipts can be exported as JSON.
+✨ Why RecoverAI?
+Traditional checkout	RecoverAI
+Sees a payment request	Understands the agent, customer, amount, category, and intent
+Treats every retry similarly	Chooses the safest next-best action
+Does not understand agent permissions	Enforces transaction, category, and daily spending limits
+May retry during uncertain payment states	Checks duplicate-charge and delayed-webhook risk first
+Detects problems after the fact	Blocks intent drift before execution
+Gives limited context to operators	Provides confidence, reasoning, safeguards, and receipts
 
 
-
-Primary Demo: TravelMate-204
-The recommended hackathon demo uses a fictional travel agent.
-
-Field	Value
+🎬 Live Demo Story
+TravelMate-204: a safe purchase that becomes an unsafe one
+Signal	Value
 Agent	TravelMate-204
 Customer	Customer T-204
-Intent	Book a hotel for a weekend trip
-Category	Hotels & Travel
+Purchase intent	Weekend hotel booking
+Authorized category	Hotels & Travel
 Original amount	₹9,800
 Maximum authorized amount	₹12,000
-Payment method	UPI
-Failure	Temporary UPI timeout
+Payment rail	UPI
 Agent trust score	88/100
-Duplicate-charge risk	4%
-Demo story
-1	TravelMate-204 initiates a ₹9,800 hotel checkout.
-2	RecoverAI verifies the simulated agent identity and authorization scope.
-3	The UPI payment times out.
-4	RecoverAI checks duplicate-charge risk instead of performing a blind retry.
-5	A safe alternate UPI payment link is prepared after a cooldown.
-6	The agent attempts to increase the purchase to ₹18,000.
-7	RecoverAI detects intent drift and blocks the request because the authorization limit is ₹12,000.
-8	A human operator can approve, reject, pause, or revoke the action.
-9	RecoverAI generates an Agent Action Receipt and updates the dashboard metrics.
+The flow
+① Agent initiates ₹9,800 hotel checkout
+                    ↓
+② RecoverAI verifies identity and authorization scope
+                    ↓
+③ UPI timeout occurs — no blind retry
+                    ↓
+④ Duplicate-charge risk is checked: 4%
+                    ↓
+⑤ Alternate UPI recovery link is prepared
+                    ↓
+⑥ Agent changes the request to ₹18,000
+                    ↓
+⑦ RecoverAI detects intent drift and blocks the overrun
+                    ↓
+⑧ Human approval is requested
 
-Successful recovery outcome
-Original amount: ₹9,800
-Recovered revenue: ₹9,800
-Outcome: RECOVERED
-Recovery action: Alternate UPI payment link
-Retries avoided: 1
-Duplicate-charge risk: 4%
-
-Blocked agent outcome
-Original amount: ₹9,800
-Requested amount: ₹18,000
-Maximum authorized amount: ₹12,000
-Recovered revenue: ₹0
-Outcome: BLOCKED_BY_SCOPE
-Human approval required: Yes
-Reason: Requested amount exceeds authorization scope
-
-
-
-Product Flow
-Agent or Customer Intent
-          ↓
-Verify Agent Identity
-          ↓
-Check Authorization Scope
-          ↓
-Diagnose Payment Event
-          ↓
-Run Duplicate-Charge Safety Check
-          ↓
-Apply Merchant Policy
-          ↓
-Choose Next-Best Action
-          ↓
-Recover, Approve, Escalate, or Block
-          ↓
-Generate Action Receipt
+The safety moment
+┌─────────────────────────────────────────────┐
+│        AGENT CHECKOUT BLOCKED                │
+├─────────────────────────────────────────────┤
+│ Original amount       ₹9,800                 │
+│ Requested amount      ₹18,000                 │
+│ Authorized maximum    ₹12,000                │
+│ Amount over limit      ₹6,000                │
+│                                             │
+│ Reason: Request exceeds authorization scope │
+│ Action: Human approval required              │
+└─────────────────────────────────────────────┘
 
 
 
-Key Screens
-Screen	Purpose
-Landing page	Explain the product and its trust layer
-Guided demo	Present the TravelMate-204 scenario
-Overview	Monitor recovery, agent checkouts, and blocked actions
-Agent checkout	View active agent sessions and authorization checks
-Agents	Manage trust scores, limits, pause, and revoke controls
-Payment cases	Search and filter failed-payment cases
-Case detail	Inspect reasoning, safeguards, communication, and receipt
-Live agent	Watch the simulated decision pipeline
-Analytics	View recovery and agentic-commerce insights
-Recovery Constitution	Configure autonomy and safety policies
-Integrations	Inspect simulated payment events and webhook payloads
-Settings	Manage demo workspace and reset synthetic data
+💰 Two Outcomes, Clearly Separated
+RecoverAI distinguishes between recovering a safe payment and blocking an unsafe action.
+
+✅ Safe recovery
+A temporary UPI timeout is recovered through an alternate payment link:
+
+Payment status       RECOVERED
+Recovered revenue    ₹9,800
+Recovery action      Alternate UPI payment link
+Retries avoided      1
+Duplicate risk       4%
+
+🛡️ Scope protection
+An AI agent attempts to exceed its authorization:
+
+Payment status       BLOCKED_BY_SCOPE
+Recovered revenue    ₹0
+Requested amount     ₹18,000
+Maximum allowed      ₹12,000
+Human approval       Required
+Reason               Amount exceeds authorization scope
 
 
-Technology Stack
+
+🧠 Trust-Aware Recovery Engine
+RecoverAI does not treat every failed payment as a retry opportunity.
+
+Payment event	Decision
+Temporary UPI timeout	Check debit status, wait, then offer an alternate link
+Expired card	Request a new payment method; never retry the same card
+Insufficient balance	Send one respectful reminder; avoid repeated retries
+Bank outage	Pause recovery and suggest another payment rail
+Delayed webhook	Reconcile payment status before contacting or retrying
+Duplicate debit signal	Block retry and escalate for reconciliation
+Abandoned checkout	Allow at most one contextual reminder
+High-value payment	Require human approval
+Agent amount overrun	Block the transaction and request approval
+
+
+🔒 Five-Point Payment Safety Check
+Before a recovery action is allowed, RecoverAI evaluates:
+
+✓ No successful debit signal detected
+✓ No pending bank confirmation
+✓ No unresolved delayed webhook
+✓ No recent retry inside the safety interval
+✓ Idempotency and refund flags checked
+
+If the risk is too high, the system pauses recovery instead of risking a duplicate charge.
+
+
+
+🧾 Agent Action Receipt
+Every final action produces an explainable audit receipt.
+
+┌─────────────────────────────────────────────┐
+│           RECOVERAI · ACTION RECEIPT         │
+├─────────────────────────────────────────────┤
+│ Case                 REC-10482               │
+│ Agent                TravelMate-204          │
+│ Original amount      ₹9,800                  │
+│ Recovered revenue    ₹9,800                  │
+│ Outcome              RECOVERED               │
+│ Decision confidence  93%                     │
+│ Retries avoided      1                       │
+│ Safeguard            Duplicate check passed  │
+└─────────────────────────────────────────────┘
+
+Receipts can be exported as JSON for audit, debugging, and future reconciliation workflows.
+
+
+
+⚙️ Recovery Constitution
+Merchants define what the agent may do automatically and when a human must intervene.
+
+Policy control	Example value
+Maximum automatic recovery	₹10,000
+Maximum agent transaction	₹12,000
+Daily agent spending limit	₹30,000
+Maximum attempts per case	2
+Duplicate-risk threshold	20%
+Minimum confidence	70%
+Human-approval threshold	₹25,000
+Maximum cart modification	15%
+Customer messages per day	2
+Autonomy modes
+Observe only  →  Recommend  →  Prepare  →  Act within policy
+
+Policy changes directly affect the simulated decision engine.
+
+
+
+🏗️ Architecture
+flowchart TD
+    A[Agent or Customer Intent] --> B[Agent Trust Service]
+    B --> C[Authorization Scope Check]
+    C --> D[Payment Event Simulator]
+    D --> E[Failure Diagnosis]
+    E --> F[Duplicate-Charge Safety Check]
+    F --> G[Recovery Constitution]
+    G --> H{Next-Best Action}
+    H -->|Safe| I[Recover Payment]
+    H -->|Risky| J[Human Approval]
+    H -->|Unsafe| K[Block or Escalate]
+    I --> L[Action Receipt and Analytics]
+    J --> L
+    K --> L
+
+Core services
+src/services/
+├── AgentTrustService.ts
+├── AuthorizationScopeService.ts
+├── AgentCheckoutService.ts
+├── RecoveryDecisionEngine.ts
+├── DuplicateChargeSafetyService.ts
+└── RecoveryPolicyService.ts
+
+
+
+🖥️ Product Surface
+Route	Experience
+/	Product landing page and value proposition
+/demo	Guided TravelMate-204 presentation
+/app/overview	Recovery and agentic-commerce command center
+/app/agent-checkout	Active agent checkout monitor
+/app/agents	Agent registry, trust, pause, and revoke controls
+/app/cases	Searchable failed-payment queue
+/app/cases/:id	Explainable case detail and action receipt
+/app/live-agent	Simulated decision pipeline
+/app/analytics	Recovery and agentic-commerce analytics
+/app/policies	Recovery Constitution editor
+/app/integrations	Mock payment events and webhook payloads
+/app/settings	Demo workspace and reset controls
+
+
+🧰 Technology Stack
+<p align="center">
+  <img src="https://img.shields.io/badge/React-2026-61DAFB?style=flat-square&logo=react&logoColor=white" alt="React" />
+  <img src="https://img.shields.io/badge/TypeScript-Strict-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/Vite-Fast%20Build-646CFF?style=flat-square&logo=vite&logoColor=white" alt="Vite" />
+  <img src="https://img.shields.io/badge/Tailwind-CSS-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white" alt="Tailwind CSS" />
+  <img src="https://img.shields.io/badge/State-LocalStorage-35D0A0?style=flat-square" alt="LocalStorage" />
+</p>
 •	Frontend: React + TypeScript
 •	Build tool: Vite
 •	Styling: Tailwind CSS
 •	Icons: Lucide Icons
 •	Charts: Lightweight SVG/CSS charts
-•	State management: React Context or equivalent centralized store
+•	State: React Context or equivalent centralized store
 •	Persistence: LocalStorage
 •	Decision engine: Deterministic local simulation
-•	Payment data: Synthetic local events
-•	Authentication: Optional mock demo sign-in
-
-The default demo requires no external API keys, real payment credentials, or production integrations.
+•	Payment data: Synthetic events
 
 
 
-Project Structure
-src/
-├── components/                         # Reusable UI components
-├── context/
-│   └── RecoveryContext.tsx             # Centralized demo state
-├── pages/                              # Application views and routes
-├── services/
-│   ├── AgentCheckoutService.ts         # Agent checkout orchestration
-│   ├── AgentTrustService.ts            # Simulated agent trust scoring
-│   ├── AuthorizationScopeService.ts    # Limits and scope validation
-│   ├── DuplicateChargeSafetyService.ts# Duplicate-charge protection
-│   ├── RecoveryDecisionEngine.ts       # Failure diagnosis and recovery
-│   └── RecoveryPolicyService.ts        # Merchant policy enforcement
-├── types.ts                            # Shared TypeScript models
-└── App.tsx                             # Application routing
-
-
-
-Getting Started
-Prerequisites
-•	Node.js 18 or later
-•	npm
-
-Install dependencies
+🚀 Quick Start
+# Install dependencies
 npm install
-
-Start the development server
+ 
+# Start development server
 npm run dev
+ 
+# Create production build
+npm run build
+ 
+# Preview production build
+npm run preview
 
-Open the local URL shown in the terminal. It is usually:
+Open the URL shown by Vite, usually:
 
 http://localhost:5173
 
-Build for production
-npm run build
-
-Preview the production build
-npm run preview
-
-The preview URL is usually:
-
-http://localhost:4173
-
-Optional checks
-npm run typecheck
-npm run lint
-
-These commands are available if configured in package.json.
+Recommended presentation path
+/demo
+→ Start TravelMate-204
+→ Trigger UPI timeout
+→ Show safety check
+→ Simulate customer paid
+→ Show RECOVERED receipt
+→ Trigger ₹18,000 amount increase
+→ Show BLOCKED_BY_SCOPE receipt
 
 
 
-Suggested Presentation Flow
-Open /demo and follow this sequence:
-
-10	Start the TravelMate-204 scenario.
-11	Show the ₹9,800 authorized checkout.
-12	Demonstrate agent identity and scope verification.
-13	Trigger the temporary UPI timeout.
-14	Show duplicate-charge protection and safe recovery recommendation.
-15	Trigger the agent’s ₹18,000 amount increase.
-16	Show the authorization overrun being blocked.
-17	Approve or reject the action as a human operator.
-18	Generate the final Action Receipt.
-19	Show updated recovery and trust metrics.
-
-For a successful recovery test, select the simulated customer-paid action after the alternate payment link is prepared. The receipt should show RECOVERED and ₹9,800 recovered revenue.
-
-For the safety test, trigger the ₹18,000 amount increase. The receipt should show BLOCKED_BY_SCOPE and ₹0 recovered revenue.
+✅ Responsible AI by Design
+•	No blind payment retries
+•	Duplicate-charge prevention before recovery
+•	Agent authorization checks before checkout
+•	Human approval for high-value or low-confidence actions
+•	Merchant-configurable spending and contact limits
+•	Customer opt-out support
+•	Explainable decisions and confidence scores
+•	Auditable action receipts
+•	No real payment credentials or personal data
 
 
 
-Safety and Responsible AI
-RecoverAI is designed around controlled autonomy:
+🔭 Production Roadmap
+A production implementation would add:
 
-•	It never blindly retries a failed payment.
-•	It checks payment status before recovery.
-•	It prevents duplicate-charge risk.
-•	It respects customer opt-out preferences.
-•	It limits customer communication frequency.
-•	It blocks amount overruns and category mismatches.
-•	It requires human approval for high-value or low-confidence actions.
-•	It allows merchants to pause or revoke agents.
-•	It keeps an audit trail for every decision.
-•	It shows the reason behind every major action.
-
-The application uses the term simulated agent identity verification because the prototype does not implement production cryptographic identity verification or mutual TLS.
+1	Verified payment-provider APIs and webhooks
+2	Cryptographic agent identity and authorization
+3	Idempotent payment-state reconciliation
+4	Secure secrets management
+5	Real authentication and role-based access control
+6	Immutable audit logs
+7	Production fraud and anomaly detection
+8	Consent and communication management
+9	Background workers and observability
+10	Security, privacy, and payment-compliance review
 
 
 
-Production Roadmap
-A production implementation would require:
-
-20	Real payment-provider APIs and verified webhooks.
-21	Cryptographic agent identity and authorization.
-22	Idempotency and payment-state reconciliation.
-23	Secure secrets management.
-24	Real authentication and role-based access control.
-25	Immutable audit logs.
-26	Production fraud and anomaly detection.
-27	Customer consent and communication management.
-28	Background workers and observability.
-29	Security, privacy, and payment-compliance review.
-30	Real merchant, agent, and messaging integrations.
-31	Model evaluation and monitoring if an LLM is introduced.
-
-
-
-Limitations
-This is a frontend-first hackathon prototype. It currently uses:
-
-•	Synthetic payment events
-•	Simulated agent verification
-•	Deterministic local decision logic
-•	LocalStorage persistence
-•	Simulated payment capture
-•	Mock integrations
-•	Optional mock sign-in
-
-It does not execute real payments, connect to production Razorpay systems, receive real webhooks, verify real cryptographic signatures, or send real customer messages.
-
-
-
-Hackathon Pitch
-AI agents will soon search, choose, and pay on behalf of people. But merchants need a way to trust and control those autonomous actions.
+🎤 Hackathon Pitch
+AI agents will soon search, choose, and pay on behalf of people. Merchants need a way to trust and control those autonomous actions.
 
 RecoverAI is that trust layer. It verifies the initiating agent, enforces spending and category authorization, detects intent drift, prevents duplicate charges, and recovers safe payment failures without blindly retrying.
 
-In our demo, TravelMate-204 is authorized to spend ₹12,000. It initiates a ₹9,800 hotel payment, which times out. RecoverAI checks duplicate-charge risk and prepares a safe alternate payment link. When the agent tries to increase the order to ₹18,000, RecoverAI blocks it and requests human approval.
+In our demo, TravelMate-204 is authorized to spend ₹12,000. It initiates a ₹9,800 hotel payment, which times out. RecoverAI safely prepares an alternate payment link. When the agent tries to increase the order to ₹18,000, RecoverAI blocks it and requests human approval.
 
 RecoverAI helps safe autonomous purchases complete while stopping unsafe autonomous actions.
 
 
 
-Disclaimer
+⚠️ Prototype Disclaimer
 RecoverAI is an independent hackathon prototype using synthetic payment and agent events. It is not an official Razorpay product.
 
-All names, aliases, transaction values, metrics, payment events, and integrations shown in this project are illustrative demonstration data.
+The prototype uses simulated agent identity verification, deterministic local decisions, LocalStorage persistence, mock integrations, and simulated payment capture. It does not execute real payments, receive production webhooks, verify real cryptographic signatures, or send real customer messages.
